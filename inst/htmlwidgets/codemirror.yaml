@@ -1,0 +1,6 @@
+dependencies:
+  - name: codemirror
+    version: 5.10.0
+    src: htmlwidgets/lib/codemirror
+    script: ./lib/codemirror.js
+    stylesheet: ./lib/codemirror.css

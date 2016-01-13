@@ -1,0 +1,27 @@
+Package: codemirrorR
+Title: htmlwidget for \href{http://codemirror.net/}{CodeMirror}
+Version: 0.0.1
+Date: 2016-01-13
+Authors@R: c(
+      person(
+        "Marijn","Haverbeke"
+        , role = c("aut", "cph")
+        , comment = "CodeMirror library in htmlwidgets/lib, http://codemirror.net/"
+      ),
+      person(
+        "Kent", "Russell"
+        , role = c("aut", "cre")
+        , comment = "R interface"
+        , email = "kent.russell@timelyportfolio.com"
+      )
+    )
+Maintainer: Kenton Russell <kent.russell@timelyportfolio.com>
+Description: htmlwidget for CodeMirror
+License: MIT + file LICENSE
+LazyData: true
+URL: https://github.com/timelyportfolio/codemirrorR
+BugReports: https://github.com/timelyportfolio/codemirrorR/issues
+Imports:
+  htmltools,
+  htmlwidgets
+RoxygenNote: 4.1.1.9001

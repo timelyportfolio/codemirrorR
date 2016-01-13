@@ -1,28 +1,137 @@
-# CodeMirror
-[![Build Status](https://travis-ci.org/codemirror/CodeMirror.svg)](https://travis-ci.org/codemirror/CodeMirror)
-[![NPM version](https://img.shields.io/npm/v/codemirror.svg)](https://www.npmjs.org/package/codemirror)
-[![Join the chat at https://gitter.im/codemirror/CodeMirror](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/codemirror/CodeMirror)  
-[Funding status: ![maintainer happiness](https://marijnhaverbeke.nl/fund/status_s.png?again)](https://marijnhaverbeke.nl/fund/)
+# CodeMirror htmlwidget for R
 
-CodeMirror is a versatile text editor implemented in JavaScript for
-the browser. It is specialized for editing code, and comes with over
-100 language modes and various addons that implement more advanced
-editing functionality.
+This is an early version of a R [`htmlwidget`](http://htmlwidgets.org) version of [CodeMirror](https://codemirror.net) by [Marijn Haverbeke](https://marijnhaverbeke.nl/fund/).
 
-A rich programming API and a CSS theming system are available for
-customizing CodeMirror to fit your application, and extending it with
-new functionality.
+## Installation
 
-You can find more information (and the
-[manual](http://codemirror.net/doc/manual.html)) on the [project
-page](http://codemirror.net). For questions and discussion, use the
-[discussion forum](https://discuss.codemirror.net/).
+```
+devtools::install_github("timelyportfolio/codemirrorR")
+```
 
-See
-[CONTRIBUTING.md](https://github.com/codemirror/CodeMirror/blob/master/CONTRIBUTING.md)
-for contributing guidelines.
+## Examples
 
-The CodeMirror community aims to be welcoming to everybody. We use the
-[Contributor Covenant
-(1.1)](http://contributor-covenant.org/version/1/1/0/) as our code of
-conduct.
+### Simple
+
+```
+library(codemirrorR)
+
+codemirror("hi")
+```
+
+### Mode
+
+```
+library(codemirrorR)
+
+codemirror(
+  "
+  library(codemirror)
+  
+  codemirror('hi')
+  ",
+  mode = "r"
+)
+```
+
+```
+library(codemirrorR)
+
+codemirror(
+  paste0(
+    readLines(
+      system.file(
+        "htmlwidgets/codemirror.js",
+        package = "codemirrorR"
+      )
+    ),
+    collapse = "\n"
+  ),
+  mode = "javascript"
+)
+```
+
+```
+library(codemirrorR)
+library(xml2)
+
+# ?xml2::readxml
+cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
+
+codemirror(
+  as.character(cd),
+  mode = "xml"
+)
+```
+
+### Themes
+
+```
+library(codemirrorR)
+
+codemirror(
+  paste0(
+    readLines(
+      system.file(
+        "htmlwidgets/codemirror.js",
+        package = "codemirrorR"
+      )
+    ),
+    collapse = "\n"
+  ),
+  mode = "javascript",
+  theme = "night"
+)
+```
+
+### Addons
+
+**will add much better support for addons**
+
+```
+library(codemirrorR)
+library(xml2)
+
+# ?xml2::readxml
+cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
+
+cm <- codemirror(
+  as.character(cd),
+  mode = "xml",
+  lineNumbers = TRUE,
+  foldGutter = TRUE,
+  gutters = c("CodeMirror-linenumbers", "CodeMirror-foldgutter")
+)
+
+cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
+  name = "codemirror-foldcode",
+  version = "1.0.0",
+  src = system.file(
+    "htmlwidgets/lib/codemirror/addon/",
+    package = "codemirrorR"
+  ),
+  script = "fold/foldcode.js"
+)
+
+cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
+  name = "codemirror-foldgutter",
+  version = "1.0.0",
+  src = system.file(
+    "htmlwidgets/lib/codemirror/addon/",
+    package = "codemirrorR"
+  ),
+  script = "fold/foldgutter.js",
+  stylesheet = "fold/foldgutter.css"
+)
+
+cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
+  name = "xml-fold",
+  version = "1.0.0",
+  src = system.file(
+    "htmlwidgets/lib/codemirror/addon/",
+    package = "codemirrorR"
+  ),
+  script = "fold/xml-fold.js"
+)
+
+cm
+```
