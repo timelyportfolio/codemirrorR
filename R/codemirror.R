@@ -1,6 +1,19 @@
-#' <Add Title...>
+#' CodeMirror htmlwidget
 #'
-#' <Add Description>
+#' Create a {http://codemirror.net}{CodeMirror} editor for use
+#' as an htmlwidgets for \code{rmarkdown}, \code{Shiny},
+#' the R console, RStudio Viewer, 
+#'
+#' @param doc \code{character}, file or file path, or \code{xml2}
+#'          document or nodeset
+#' @param mode \code{character} specifying a {https://codemirror.net/doc/manual.html\#option_mode}{mode}
+#' @param theme \code{character} specifying a {https://codemirror.net/doc/manual.html\#option_theme}{theme}
+#' @param ... arguments for other CodeMirror {https://codemirror.net/doc/manual.html\#option_value}{options}
+#' @param width,height any valid \code{CSS} size unit for the
+#'          width and height of the container
+#' @param elementId \code{character} for the unique id of the
+#'          htmlwidget container;  likely \code{NULL} unless
+#'          you need to customize
 #'
 #' @import htmlwidgets
 #'
@@ -12,6 +25,30 @@ codemirror <- function(
   ...,
   width = NULL, height = NULL, elementId = NULL
 ) {
+  
+  # handle different doc types
+  
+  # handle files
+  #   from DiagrammeR
+  # check for a connection or file
+  if (inherits(doc, "connection") ||
+     (is.character(doc) && file.exists(doc))
+  )  {
+    doc <- readLines(doc, warn = FALSE)
+  }
+  
+  # handle character
+  if(is.character(doc)){
+    doc <- paste0(doc, collapse = "\n")
+  }
+  
+  # handle xml from xml2
+  #  from xmlview
+  if (inherits(doc, "xml_nodeset")) {
+    doc <- paste0(as.character(doc), collapse="\n")
+  } else if (inherits(doc, "xml_document") | inherits(doc, "xml_node")) {
+    doc <- as.character(doc)
+  }
   
   dependencies <- list()
   

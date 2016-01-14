@@ -37,14 +37,9 @@ codemirror(
 library(codemirrorR)
 
 codemirror(
-  paste0(
-    readLines(
-      system.file(
-        "htmlwidgets/codemirror.js",
-        package = "codemirrorR"
-      )
-    ),
-    collapse = "\n"
+  system.file(
+    "htmlwidgets/codemirror.js",
+    package = "codemirrorR"
   ),
   mode = "javascript"
 )
@@ -57,10 +52,7 @@ library(xml2)
 # ?xml2::readxml
 cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
 
-codemirror(
-  as.character(cd),
-  mode = "xml"
-)
+codemirror(cd, mode = "xml")
 ```
 
 ### Themes
@@ -69,14 +61,9 @@ codemirror(
 library(codemirrorR)
 
 codemirror(
-  paste0(
-    readLines(
-      system.file(
-        "htmlwidgets/codemirror.js",
-        package = "codemirrorR"
-      )
-    ),
-    collapse = "\n"
+  system.file(
+    "htmlwidgets/codemirror.js",
+    package = "codemirrorR"
   ),
   mode = "javascript",
   theme = "night"
@@ -95,7 +82,7 @@ library(xml2)
 cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
 
 cm <- codemirror(
-  as.character(cd),
+  cd,
   mode = "xml",
   lineNumbers = TRUE,
   foldGutter = TRUE,
