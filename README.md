@@ -84,41 +84,20 @@ cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
 cm <- codemirror(
   cd,
   mode = "xml",
-  lineNumbers = TRUE,
-  foldGutter = TRUE,
-  gutters = c("CodeMirror-linenumbers", "CodeMirror-foldgutter")
+  lineNumbers = TRUE
 )
 
-cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
-  name = "codemirror-foldcode",
-  version = "1.0.0",
-  src = system.file(
-    "htmlwidgets/lib/codemirror/addon/",
+cm_foldcode(cm, "xml-fold")
+
+# brace fold
+library(pipeR)
+
+codemirror(
+  system.file(
+    "htmlwidgets/codemirror.js",
     package = "codemirrorR"
   ),
-  script = "fold/foldcode.js"
-)
-
-cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
-  name = "codemirror-foldgutter",
-  version = "1.0.0",
-  src = system.file(
-    "htmlwidgets/lib/codemirror/addon/",
-    package = "codemirrorR"
-  ),
-  script = "fold/foldgutter.js",
-  stylesheet = "fold/foldgutter.css"
-)
-
-cm$dependencies[[length(cm$dependencies) + 1]] <- htmltools::htmlDependency(
-  name = "xml-fold",
-  version = "1.0.0",
-  src = system.file(
-    "htmlwidgets/lib/codemirror/addon/",
-    package = "codemirrorR"
-  ),
-  script = "fold/xml-fold.js"
-)
-
-cm
+  mode = "javascript",
+  theme = "night"
+) %>>% cm_foldcode("brace-fold")
 ```
