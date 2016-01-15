@@ -7,3 +7,4 @@
 .idea
 *.iml
 .Rproj.user
+inst/doc

@@ -23,7 +23,7 @@ codemirror <- function(
   mode = NULL,
   theme = NULL,
   ...,
-  width = NULL, height = NULL, elementId = NULL
+  width = "100%", height = NULL, elementId = NULL
 ) {
   
   # handle different doc types

@@ -12,6 +12,8 @@ HTMLWidgets.widget({
       
       renderValue: function(x) {
         
+        el.style.overflow = "scroll";
+        
         var editor = CodeMirror(el, x);
         
         this.editor = editor;

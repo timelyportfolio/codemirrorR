@@ -21,7 +21,10 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/timelyportfolio/codemirrorR
 BugReports: https://github.com/timelyportfolio/codemirrorR/issues
-Imports:
+Imports: 
   htmltools,
   htmlwidgets
 RoxygenNote: 4.1.1.9001
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr

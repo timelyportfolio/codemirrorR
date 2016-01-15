@@ -1,0 +1,135 @@
+---
+title: "Intro to codemirrorR"
+author: "Kenton Russell"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro to codemirrorR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# CodeMirror htmlwidget for R
+
+This is an early version of a R [`htmlwidget`](http://htmlwidgets.org) version of [CodeMirror](https://codemirror.net) by [Marijn Haverbeke](https://marijnhaverbeke.nl/fund/).
+
+## Installation
+
+```{r eval = FALSE}
+devtools::install_github("timelyportfolio/codemirrorR")
+```
+
+## Examples
+
+### Simple
+
+```{r}
+library(codemirrorR)
+
+codemirror("hi")
+```
+
+### Mode
+
+```{r}
+library(codemirrorR)
+
+codemirror(
+  "
+  library(codemirror)
+  
+  codemirror('hi')
+  ",
+  mode = "r"
+)
+```
+
+
+```{r}
+library(codemirrorR)
+
+codemirror(
+  system.file(
+    "htmlwidgets/codemirror.js",
+    package = "codemirrorR"
+  ),
+  mode = "javascript",
+  width = "100%",
+  height = "400px"
+)
+```
+
+
+```{r}
+library(codemirrorR)
+library(xml2)
+
+# ?xml2::readxml
+cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
+
+codemirror(cd, mode = "xml", width = "100%", height = "400px")
+```
+
+
+### Themes
+
+
+```{r}
+library(codemirrorR)
+
+codemirror(
+  system.file(
+    "htmlwidgets/codemirror.js",
+    package = "codemirrorR"
+  ),
+  mode = "javascript",
+  theme = "night"
+)
+```
+
+
+### Addons
+
+**will add much better support for addons**
+
+<h4>xml folding</h4>
+
+```{r}
+library(codemirrorR)
+library(xml2)
+
+# ?xml2::readxml
+cd <- read_xml("http://www.xmlfiles.com/examples/cd_catalog.xml")
+
+cm <- codemirror(
+  cd,
+  mode = "xml",
+  lineNumbers = TRUE
+)
+
+cm_foldcode(cm, "xml-fold")
+```
+
+
+<h4>brace folding</h4>
+
+
+
+```{r}
+# brace fold
+library(pipeR)
+
+codemirror(
+  system.file(
+    "htmlwidgets/codemirror.js",
+    package = "codemirrorR"
+  ),
+  mode = "javascript",
+  theme = "night"
+) %>>% cm_foldcode("brace-fold")
+```
+
+
+## Praise, Thanks, and Attribution
+
+For those of you who don't know the incredible work of [Marijn Haverbeke](https://marijnhaverbeke.nl/), go see it and [fund him](https://marijnhaverbeke.nl/fund/).  Thanks Marijn!
